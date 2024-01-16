@@ -16,29 +16,37 @@
 
         <link href="/static/styles.css" rel="stylesheet">
 
+        <!-- Title of tab -->
         <title>WealthTrade | {% block title %}{% endblock %}</title>
 
     </head>
 
     <body>
+        <!-- Navigation Bar-->
         <nav class="bg-light border navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
+                <!-- Company Name -->
                 <a class="navbar-brand" href="/"><span class="green">WealthTrade</span></a>
                 <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbar">
+                    <!-- When user is logged in -->
                     {% if session["user_id"] %}
+                    <!-- List of Routes on right side -->
                         <ul class="navbar-nav me-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/quote">Quote</a></li>
                             <li class="nav-item"><a class="nav-link" href="/buy">Buy</a></li>
                             <li class="nav-item"><a class="nav-link" href="/sell">Sell</a></li>
                             <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
                         </ul>
+                        <!-- List of routes of left side -->
                         <ul class="navbar-nav ms-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
                         </ul>
+                        <!-- When user is not logged in -->
                     {% else %}
+                        <!-- List of Routes on left side -->
                         <ul class="navbar-nav ms-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
                             <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
@@ -48,18 +56,12 @@
             </div>
         </nav>
 
-        {% if get_flashed_messages() %}
-            <header>
-                <div class="alert alert-primary mb-0 text-center" role="alert">
-                    {{ get_flashed_messages() | join(" ") }}
-                </div>
-            </header>
-        {% endif %}
-
+        <!-- Display elements in body-->
         <main class="container-fluid py-5 text-center">
             {% block main %}{% endblock %}
         </main>
 
+        <!-- Display footer-->
         <footer class="mb-5 small text-center text-muted">
             CLC Project by Ivan Chau
             <br>

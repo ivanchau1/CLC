@@ -20,6 +20,7 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///finance.db")
 
+# Country-dependent formatting
 locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
 @app.after_request
@@ -29,7 +30,6 @@ def after_request(response):
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
-
 
 @app.route("/")
 @login_required
@@ -159,6 +159,11 @@ def history():
         "SELECT * FROM history WHERE user_id = ? ORDER BY time DESC", session["user_id"]
     )
 
+    # Converts the integers in currency
+    for row in rows:
+        row["price"] = locale.currency(row["price"], grouping=True)
+        row["totalCost"] = locale.currency(row["totalCost"], grouping=True)
+
     return render_template("history.html", rows=rows)
 
 
@@ -250,7 +255,7 @@ def register():
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 400)
+            return apology("must provide password", 401)
 
         # Ensure password and confirmation match
         elif request.form.get("password") != request.form.get("confirmation"):

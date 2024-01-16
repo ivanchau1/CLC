@@ -12,7 +12,7 @@ from functools import wraps
 
 def apology(message, code=400):
     """Render message as an apology to user."""
-
+    # Modifies message to meet syntax of memegen.link
     def escape(s):
         """
         Escape special characters.
@@ -42,6 +42,7 @@ def login_required(f):
     http://flask.pocoo.org/docs/0.12/patterns/viewdecorators/
     """
 
+    # Verifies that cookie exist
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if session.get("user_id") is None:
